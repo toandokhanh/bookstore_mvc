@@ -1,4 +1,7 @@
 <?php
+  include '../config/config.php';
+?>
+<?php
 // thêm sửa xóa trong database
 Class Database{
    public $host   = DB_HOST;
