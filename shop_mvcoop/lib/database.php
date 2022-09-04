@@ -1,5 +1,6 @@
 <?php
-  include '../config/config.php';
+  // error_reporting(0); 
+  include_once   '../config/config.php';
 ?>
 <?php
 // thêm sửa xóa trong database

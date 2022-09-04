@@ -8,7 +8,9 @@ body {
   color: #444;
   font-size: 14px;
   padding: 0;
+  
 }
+
 /* commons
 ----------------------------------------------- */
 .floatleft{float:left;}
@@ -1159,3 +1161,5 @@ td.details {
 
 .gallery-sand .sorting{background-color:white !important;}
 table.form select{width:200px;}
+
+
