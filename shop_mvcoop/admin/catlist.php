@@ -3,13 +3,26 @@
 <?php include '../classes/category.php' ?>
 <?php
 	$cat = new category();
+	//delete
+	if(isset($_GET['delid'])){
+		$id = $_GET['delid'];
+		$delcate = $cat->delete_category($id);
+	 }
+	
 ?>
 
         <div class="grid_10">
             <div class="box round first grid">
                 <h2>Danh sách sản phẩm</h2>
-                <div class="block">        
+
+                <div class="block">  
+				<?php
+						if(isset($delcate)){
+							echo $delcate;
+						}
+					?>      
                     <table class="data display datatable" id="example">
+						
 					<thead>
 						<tr>
 							<th>STT.</th>
@@ -28,7 +41,7 @@
 						<tr class="odd gradeX">
 							<td><?php echo $i ?></td>
 							<td><?php echo $result['catName'] ?></td>
-							<td><a href="catedit.php?catid=<?php echo $result['catId'] ?>">Sửa</a> || <a  href="?catid=<?php echo $result['catId'] ?>">Xóa</a></td>
+							<td><a href="catedit.php?catid=<?php echo $result['catId'] ?>">Sửa</a> || <a onclick="return confirm('Bạn có chắn chắn xóa không?')" href="?delid=<?php echo $result['catId'] ?>">Xóa</a></td>
 						</tr>
 						<?php
 					}
@@ -36,6 +49,7 @@
 						?>
 					</tbody>
 				</table>
+				
                </div>
             </div>
         </div>

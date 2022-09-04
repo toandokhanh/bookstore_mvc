@@ -68,6 +68,18 @@
             return $result;
 
         }
+        public function delete_category($id){
+            $query = "DELETE FROM `tbl_category` WHERE catId = '$id'";
+            $result = $this->db->delete($query);
+            if($result){
+                $alert = "<span class='success'>Thao tác thành công !</span>";
+                return $alert;
+            }else {
+                $alert = "<span style='color: #ff0000cc'; class='error'>Thao tác thất bai</span>";
+                return $alert;
+            }
+
+        }
     }
     
     
