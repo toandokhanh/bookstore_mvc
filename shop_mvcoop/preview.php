@@ -7,7 +7,7 @@
     	<div class="section group">
 				<div class="cont-desc span_1_of_2">				
 					<div class="grid images_3_of_2">
-						<img src="/image_books/home/9.jpg" alt="" />
+						<img src="./image_books/home/9.jpg" alt="" />
 					</div>
 				<div class="desc span_3_of_2">
 					<h2 style="font-weight: 600;">Clean Code - Mã Sạch Và Con Đường Trở Thành Lập Trình Viên Giỏi</h2>

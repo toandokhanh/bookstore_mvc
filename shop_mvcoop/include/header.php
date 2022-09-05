@@ -108,9 +108,9 @@
     
                 </div>
                 <div class="header__top__stacked">
-                    <div class="wishlist"><ion-icon class="header__top__stacked__icon" name="heart-outline"></ion-icon><a style="color: black;" href="../topbrands.php">Yêu thích</a></div>
-                    <div class="myAccount"><ion-icon class="header__top__stacked__icon" name="person-circle-outline"></ion-icon><a style="color: black;" href="../login.php">Tài khoản</a></div>
-                    <div class="checkout"><ion-icon class="header__top__stacked__icon" name="log-out-outline"></ion-icon><a style="color: black;" href="../login.php">Thủ tục thanh toán</a></div>
+                    <div class="wishlist"><ion-icon class="header__top__stacked__icon" name="heart-outline"></ion-icon><a style="color: black;" href="../../shop_mvcoop/topbrands.php">Yêu thích</a></div>
+                    <div class="myAccount"><ion-icon class="header__top__stacked__icon" name="person-circle-outline"></ion-icon><a style="color: black;" href="../../shop_mvcoop/login.php">Tài khoản</a></div>
+                    <div class="checkout"><ion-icon class="header__top__stacked__icon" name="log-out-outline"></ion-icon><a style="color: black;" href="../../shop_mvcoop/login.php">Thủ tục thanh toán</a></div>
                 </div>
             </div>
   <div class="wrap">

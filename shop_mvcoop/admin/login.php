@@ -7,7 +7,7 @@
 		$adminUser = $_POST['adminUser'];
 		$adminPass = $_POST['adminPass'];
 
-		$login_check = $class->login_admin($adminUser, $adminPass);
+		$login_check = $class->login_admin($adminUser, md5($adminPass));
 	}
 ?>
 <!DOCTYPE html>

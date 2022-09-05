@@ -20,7 +20,7 @@
 							</tr>
 							<tr>
 								<td>Tên sách</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
+								<td><img src="./image_books/home/1.jpg" alt=""/></td>
 								<td>20000 VNĐ</td>
 								<td>
 									<form action="" method="post">
@@ -34,7 +34,7 @@
 							
 							<tr>
 								<td>Tên sách</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
+								<td><img src="./image_books/home/1.jpg" alt=""/></td>
 								<td>20000 VNĐ</td>
 								<td>
 									<form action="" method="post">
@@ -48,7 +48,7 @@
 							
 							<tr>
 								<td>Tên sách</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
+								<td><img src="./image_books/home/1.jpg" alt=""/></td>
 								<td>20000 VNĐ</td>
 								<td>
 									<form action="" method="post">
@@ -61,7 +61,7 @@
 							</tr>
 							<tr>
 								<td>Tên sách</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
+								<td><img src="./image_books/home/1.jpg" alt=""/></td>
 								<td>20000 VNĐ</td>
 								<td>
 									<form action="" method="post">
@@ -75,7 +75,7 @@
 							
 							<tr>
 								<td>Tên sách</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
+								<td><img src="./image_books/home/1.jpg" alt=""/></td>
 								<td>20000 VNĐ</td>
 								<td>
 									<form action="" method="post">
@@ -106,10 +106,10 @@
 					<br>
 					<div class="shopping">
 						<div class="shopleft">
-							<a href="index.php"> <img src="images/shop.png" alt="" /></a>
+							<a href="index.php"> <img src="./image_books/home/1.jpg alt="" /></a>
 						</div>
 						<div class="shopright">
-							<a href="login.php"> <img src="images/check.png" alt="" /></a>
+							<a href="login.php"> <img src="./image_books/home/1.jpg alt="" /></a>
 						</div>
 					</div>
     	</div>  	
