@@ -75,7 +75,7 @@ CREATE TABLE `bill_detail` (
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
-  `ac_id` int(11) NOT NULL,
+--  `ac_id` int(11) NOT NULL,
   `lastupdate_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
@@ -221,8 +221,8 @@ ALTER TABLE `bill_detail`
 --
 -- Constraints for table `cart`
 --
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`ac_id`) REFERENCES `acounts` (`ac_id`);
+--ALTER TABLE `cart`
+--  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`ac_id`) REFERENCES `acounts` (`ac_id`);
 
 --
 -- Constraints for table `cart_detail`
