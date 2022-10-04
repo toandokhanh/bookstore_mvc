@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2022 at 07:31 PM
+-- Generation Time: Oct 04, 2022 at 07:39 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `database_storebook`
+-- Database: `bookstore_mvc`
 --
 
 -- --------------------------------------------------------
@@ -30,13 +30,13 @@ SET time_zone = "+00:00";
 CREATE TABLE `acounts` (
   `ac_id` int(11) NOT NULL,
   `cart_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
   `use_name` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `pass` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `add` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `sex` tinyint(1) NOT NULL,
   `phone` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
-  `role` int(11) NOT NULL
+  `email` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 -- --------------------------------------------------------
@@ -47,6 +47,7 @@ CREATE TABLE `acounts` (
 
 CREATE TABLE `bill` (
   `bill_id` int(11) NOT NULL,
+  `ac_id` int(11) NOT NULL,
   `bill_amount` int(11) NOT NULL,
   `total` double NOT NULL,
   `created_date` date NOT NULL
@@ -74,7 +75,8 @@ CREATE TABLE `bill_detail` (
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
-  `ac_id` int(11) NOT NULL
+  `ac_id` int(11) NOT NULL,
+  `lastupdate_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 -- --------------------------------------------------------
@@ -119,6 +121,17 @@ CREATE TABLE `product` (
   `product_created_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `role_id` int(11) NOT NULL,
+  `role_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -127,31 +140,39 @@ CREATE TABLE `product` (
 -- Indexes for table `acounts`
 --
 ALTER TABLE `acounts`
-  ADD PRIMARY KEY (`ac_id`);
+  ADD PRIMARY KEY (`ac_id`),
+  ADD KEY `cart_id` (`cart_id`,`role_id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- Indexes for table `bill`
 --
 ALTER TABLE `bill`
-  ADD PRIMARY KEY (`bill_id`);
+  ADD PRIMARY KEY (`bill_id`),
+  ADD KEY `ac_id` (`ac_id`);
 
 --
 -- Indexes for table `bill_detail`
 --
 ALTER TABLE `bill_detail`
-  ADD PRIMARY KEY (`bill_id`,`product_id`);
+  ADD PRIMARY KEY (`bill_id`,`product_id`),
+  ADD KEY `bill_id` (`bill_id`,`product_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cart_id`);
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `ac_id` (`ac_id`);
 
 --
 -- Indexes for table `cart_detail`
 --
 ALTER TABLE `cart_detail`
-  ADD PRIMARY KEY (`cart_id`,`product_id`);
+  ADD PRIMARY KEY (`cart_id`,`product_id`),
+  ADD KEY `cart_id` (`cart_id`,`product_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `catetory`
@@ -163,7 +184,59 @@ ALTER TABLE `catetory`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`product_id`);
+  ADD PRIMARY KEY (`product_id`),
+  ADD KEY `ac_id` (`ac_id`,`cate_id`),
+  ADD KEY `cate_id` (`cate_id`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`role_id`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `acounts`
+--
+ALTER TABLE `acounts`
+  ADD CONSTRAINT `acounts_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
+  ADD CONSTRAINT `acounts_ibfk_2` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`);
+
+--
+-- Constraints for table `bill`
+--
+ALTER TABLE `bill`
+  ADD CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`ac_id`) REFERENCES `acounts` (`ac_id`);
+
+--
+-- Constraints for table `bill_detail`
+--
+ALTER TABLE `bill_detail`
+  ADD CONSTRAINT `bill_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  ADD CONSTRAINT `bill_detail_ibfk_2` FOREIGN KEY (`bill_id`) REFERENCES `bill` (`bill_id`);
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`ac_id`) REFERENCES `acounts` (`ac_id`);
+
+--
+-- Constraints for table `cart_detail`
+--
+ALTER TABLE `cart_detail`
+  ADD CONSTRAINT `cart_detail_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`),
+  ADD CONSTRAINT `cart_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`ac_id`) REFERENCES `acounts` (`ac_id`),
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`cate_id`) REFERENCES `catetory` (`cate_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
