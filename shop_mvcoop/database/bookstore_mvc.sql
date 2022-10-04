@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2022 at 07:39 AM
+-- Generation Time: Oct 04, 2022 at 03:33 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -42,14 +42,37 @@ CREATE TABLE `acounts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `author`
+--
+
+CREATE TABLE `author` (
+  `author_id` int(11) NOT NULL,
+  `author_name` varchar(255) NOT NULL,
+  `year_of_birth` int(11) NOT NULL,
+  `nationality` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `author_detail`
+--
+
+CREATE TABLE `author_detail` (
+  `product_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `cooperation_day` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `bill`
 --
 
 CREATE TABLE `bill` (
   `bill_id` int(11) NOT NULL,
   `ac_id` int(11) NOT NULL,
-  `bill_amount` int(11) NOT NULL,
-  `total` double NOT NULL,
   `created_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
@@ -62,9 +85,7 @@ CREATE TABLE `bill` (
 CREATE TABLE `bill_detail` (
   `bill_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `note` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
-  `bd_amount` int(11) NOT NULL,
-  `bd_price` double NOT NULL
+  `note` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 -- --------------------------------------------------------
@@ -75,7 +96,7 @@ CREATE TABLE `bill_detail` (
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
---  `ac_id` int(11) NOT NULL,
+  `ac_id` int(11) NOT NULL,
   `lastupdate_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
@@ -112,6 +133,7 @@ CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `ac_id` int(11) NOT NULL,
   `cate_id` int(11) NOT NULL,
+  `publisher_id` int(11) NOT NULL,
   `product_name` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `describe` text COLLATE utf8_vietnamese_ci NOT NULL,
   `product_price` double NOT NULL,
@@ -120,6 +142,18 @@ CREATE TABLE `product` (
   `image` varchar(255) COLLATE utf8_vietnamese_ci NOT NULL,
   `product_created_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `publisher`
+--
+
+CREATE TABLE `publisher` (
+  `publisher_id` int(11) NOT NULL,
+  `publisher_name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -143,6 +177,20 @@ ALTER TABLE `acounts`
   ADD PRIMARY KEY (`ac_id`),
   ADD KEY `cart_id` (`cart_id`,`role_id`),
   ADD KEY `role_id` (`role_id`);
+
+--
+-- Indexes for table `author`
+--
+ALTER TABLE `author`
+  ADD PRIMARY KEY (`author_id`);
+
+--
+-- Indexes for table `author_detail`
+--
+ALTER TABLE `author_detail`
+  ADD PRIMARY KEY (`product_id`,`author_id`),
+  ADD KEY `product_id` (`product_id`,`author_id`),
+  ADD KEY `author_id` (`author_id`);
 
 --
 -- Indexes for table `bill`
@@ -186,7 +234,14 @@ ALTER TABLE `catetory`
 ALTER TABLE `product`
   ADD PRIMARY KEY (`product_id`),
   ADD KEY `ac_id` (`ac_id`,`cate_id`),
-  ADD KEY `cate_id` (`cate_id`);
+  ADD KEY `cate_id` (`cate_id`),
+  ADD KEY `publisher_id` (`publisher_id`);
+
+--
+-- Indexes for table `publisher`
+--
+ALTER TABLE `publisher`
+  ADD PRIMARY KEY (`publisher_id`);
 
 --
 -- Indexes for table `role`
@@ -206,6 +261,13 @@ ALTER TABLE `acounts`
   ADD CONSTRAINT `acounts_ibfk_2` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`);
 
 --
+-- Constraints for table `author_detail`
+--
+ALTER TABLE `author_detail`
+  ADD CONSTRAINT `author_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  ADD CONSTRAINT `author_detail_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `author` (`author_id`);
+
+--
 -- Constraints for table `bill`
 --
 ALTER TABLE `bill`
@@ -221,8 +283,8 @@ ALTER TABLE `bill_detail`
 --
 -- Constraints for table `cart`
 --
---ALTER TABLE `cart`
---  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`ac_id`) REFERENCES `acounts` (`ac_id`);
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`ac_id`) REFERENCES `acounts` (`ac_id`);
 
 --
 -- Constraints for table `cart_detail`
@@ -236,7 +298,8 @@ ALTER TABLE `cart_detail`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`ac_id`) REFERENCES `acounts` (`ac_id`),
-  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`cate_id`) REFERENCES `catetory` (`cate_id`);
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`cate_id`) REFERENCES `catetory` (`cate_id`),
+  ADD CONSTRAINT `product_ibfk_3` FOREIGN KEY (`publisher_id`) REFERENCES `publisher` (`publisher_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
